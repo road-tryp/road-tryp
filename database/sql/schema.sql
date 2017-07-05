@@ -58,6 +58,21 @@ CREATE TABLE IF NOT EXISTS trips_toads (
   REFERENCES `users` (`id`)
 );
 
+CREATE TABLE IF NOT EXISTS driver_reviews( 
+    id INT NOT NULL AUTO_INCREMENT, 
+    rider_id INT NOT NULL, 
+    driver_id INT NOT NULL, 
+    overall_rating INT NOT NULL,
+    communication_rating INT NOT NULL,
+    driving_rating INT NOT NULL,
+    accuracy_rating INT NOT NULL,
+    written_review TEXT NOT NULL,
+    add_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (rider_id) REFERENCES users(id),
+    FOREIGN KEY (driver_id) REFERENCES users(id)
+    );
+
 -- DUMMY DATA -- 
 
 INSERT INTO users (username, email, password, img_url, phone_number, first_name, last_name) VALUES ('jun123', 'jun@abc.com', '123456', 'https://lh3.google.com/u/0/d/0B5jkFvXDZd_WZzNGY0xtalg4QWc=w2878-h1472-iv1', '719-420-7890', 'Jun', 'Park');
