@@ -12,10 +12,13 @@ class SearchResults extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      redirectTo: null
+      redirectTo: null,
     }
     this.handleClick = this.handleClick.bind(this);
+
   }
+
+
 
   handleClick(e) {
     if (!this.props.currentUser.email) {
@@ -49,13 +52,13 @@ class SearchResults extends React.Component {
                   return (
                   <Table striped padded='very'>
                     <SearchResultTableHeader headers={tableHeaders} />
-                    {location.state.trips.map(trip => <SearchResultRow trip={trip} driverDetails={trip.driver} handleClick={this.handleClick}/> )}
+                    {location.state.trips.map((trip, index) => <SearchResultRow trip={trip} driverDetails={trip.driver} handleClick={this.handleClick} key ={index}/> )}
                   </Table>);
                 } else {
                   return (
                   <Table>
                     <SearchResultTableHeader headers={tableHeaders} />
-                    <SearchResultRow trip={location.state.trips} driverDetails={location.state.trips.driver} handleClick={this.handleClick}/>
+                    <SearchResultRow showModal={this.state.showModal} closeModal={this.state.closeModal} isOpen={this.state.open} trip={location.state.trips} driverDetails={location.state.trips.driver} handleClick={this.handleClick}/>
                   </Table>);
                 }
               }
