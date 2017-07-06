@@ -25,4 +25,5 @@ const bookshelf = require('bookshelf')(knex);
 
 // elsewhere, to use the bookshelf client:
 
-module.exports = bookshelf;
+module.exports.knex = knex;
+module.exports.bookshelf = bookshelf;
