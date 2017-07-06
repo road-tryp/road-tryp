@@ -14,7 +14,8 @@ const SearchResultRow = (props) => (
     <Table.Cell singleLine>{formatTime(props.trip.arrival_time)} <br/> {dateParser(props.trip.arrival_date)}</Table.Cell>  
     <Table.Cell singleLine>{props.driverDetails.year} {props.driverDetails.make || 'No Vehicle Information'} {props.driverDetails.model}</Table.Cell>
     <Table.Cell singleLine>{props.trip.seats}</Table.Cell>
-    <Table.Cell singleLine textAlign='right'><Button color='green' value={props.trip.id} onClick={props.handleClick}>Select This Trip</Button> </Table.Cell>
+    <Table.Cell textAlign='left'> Joe Lei, ****** </Table.Cell>
+    <Table.Cell singleLine textAlign='right'><Button color='green' value={props.trip.id} onClick={props.handleClick}>Select</Button> </Table.Cell>
    
   </Table.Row>
 )
