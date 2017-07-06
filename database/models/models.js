@@ -1,4 +1,5 @@
 const bookshelf = require('../bookshelf.js').bookshelf;
+const db = require('../bookshelf').knex;
 
 const User = bookshelf.Model.extend({
   tableName: 'users',
@@ -24,6 +25,30 @@ const TripToad = bookshelf.Model.extend({
   tableName: 'trips_toads'
 });
 
+const reviews = {
+
+  getAllUserData: (userID) =>  {
+    let query = `select * from users where id = ${userID}`;
+    return db.raw(query).then((data) => data[0][0]);
+  },
+
+  getAllReviewsForDriver: (driverID) => {
+    let query = `select u.first_name as "rider", utwo.first_name as "driver", r.overall_rating, r.communication_rating,   r.driving_rating, r.accuracy_rating, r.written_review from users u 
+      join driver_reviews r on r.rider_id = u.id 
+      join users utwo on utwo.id = r.driver_id 
+      where r.driver_id = ${driverID}`; 
+  return db.raw(query).then((data) => data[0]);
+  },
+
+  getAverageRatingForDriver : (driverID) => {
+    let query = `select avg(overall_rating) as 'overallRating' from driver_reviews where driver_id = ${driverID}`;
+    return db.raw(query).then((data) => data[0]);
+  }
+}
+
+reviews.getAverageRatingForDriver(5).then((data) => console.log(data));
+reviews.getAllReviewsForDriver(5).then((data) => console.log(data));
+
 
 module.exports = {
   User: User,
@@ -31,5 +56,6 @@ module.exports = {
   Trip: Trip,
   Trips: Trip.collection(Trip),
   TripToad: TripToad,
-  TripToads: TripToad.collection(TripToad)
+  TripToads: TripToad.collection(TripToad),
+  Reviews: reviews
 };
