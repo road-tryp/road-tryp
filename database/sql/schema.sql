@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS users(
     avg_rating INT
     );
 
+
 CREATE TABLE IF NOT EXISTS trips (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   driver_id INT NOT NULL,
