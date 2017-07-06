@@ -37,7 +37,7 @@ const reviews = {
       join driver_reviews r on r.rider_id = u.id 
       join users utwo on utwo.id = r.driver_id 
       where r.driver_id = ${driverID}`; 
-  return db.raw(query).then((data) => data[0]);
+    return db.raw(query).then((data) => data[0]);
   },
 
   getAverageRatingForDriver : (driverID) => {
