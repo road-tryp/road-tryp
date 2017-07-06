@@ -41,6 +41,7 @@ class Search extends React.Component {
       params: { depart, arrive, departdate, seats } 
     })
     .then((response) => {
+      console.log('resonse inside axios', response);
       this.setState({
         redirectTo: '/searchresults',
         trips: response.data
