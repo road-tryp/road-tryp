@@ -6,6 +6,7 @@ import AuthenticationHelper from '../../../../lib/AuhenticationHelper.js';
 import {Redirect} from 'react-router-dom';
 import formatTime from '../utils/formatTime.js';
 import dateParser from '../utils/dateParser.js';
+import Chat from '../Chat/ChatApp';
 
 class Trip extends React.Component {
   constructor(props) {
