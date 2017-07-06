@@ -6,10 +6,8 @@ class DriverReviews extends React.Component {
 
 	constructor(props){
 		super(props);
-	
 	}
 
-	
 	componentWillMount() {
 		//fetch driver data
 	}

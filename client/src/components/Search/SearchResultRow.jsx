@@ -37,7 +37,7 @@ class SearchResultRow extends React.Component {
   render() {
 
     return (
-      <div>
+
         <Table.Row>
             <Table.Cell>
             <Header as='h3' textAlign='left' color='green'>${this.props.trip.price}</Header>
@@ -50,11 +50,9 @@ class SearchResultRow extends React.Component {
             <Table.Cell singleLine>{this.props.trip.seats}</Table.Cell>
             <Table.Cell textAlign='left'><a onClick={this.showModal}>Joe Lei</a>, <Stars /> </Table.Cell>
             <Table.Cell singleLine textAlign='right'><Button color='green' value={this.props.trip.id} onClick={this.props.handleClick}>Select</Button> </Table.Cell>
+            <ReviewsModal dimmer = {true} open = {this.state.open} close = {this.closeModal}  />
+
          </Table.Row>    
-         <ReviewsModal dimmer = {true} open = {this.state.open} close = {this.closeModal}  />
-      </div>
-
-
     )
   }
 

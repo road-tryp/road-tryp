@@ -25,6 +25,11 @@ app.use(bodyParser.json());
 
 
 /**************USERS*****************/
+app.get('/api/users/:tripID', (req, res) => {
+
+});
+
+
 app.get('/api/users', (req, res) => {
   console.log('GET /api/users');
   models.Users.fetch().then( (users) => {
