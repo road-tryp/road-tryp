@@ -3,13 +3,13 @@ import { Container, Header } from 'semantic-ui-react';
 import Search from './Search/Search.jsx';
 import { withRouter } from 'react-router';
 import FeaturedDestinations from './FeaturedDestinations.jsx';
-import rideMap from './utils/what.js';
+import mapChart from './utils/mapChart.js';
 
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    rideMap();
+    mapChart();
   }
 
   render() {
