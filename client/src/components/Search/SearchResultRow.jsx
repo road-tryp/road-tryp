@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Header, Image, Label, Popup, Button, Message } from 'semantic-ui-react';
 import formatTime from '../utils/formatTime.js';
 import dateParser from '../utils/dateParser.js';
+import Stars from './MiniStars.jsx';
 
 const SearchResultRow = (props) => (
   <Table.Row>
@@ -14,7 +15,7 @@ const SearchResultRow = (props) => (
     <Table.Cell singleLine>{formatTime(props.trip.arrival_time)} <br/> {dateParser(props.trip.arrival_date)}</Table.Cell>  
     <Table.Cell singleLine>{props.driverDetails.year} {props.driverDetails.make || 'No Vehicle Information'} {props.driverDetails.model}</Table.Cell>
     <Table.Cell singleLine>{props.trip.seats}</Table.Cell>
-    <Table.Cell textAlign='left'> Joe Lei, ****** </Table.Cell>
+    <Table.Cell textAlign='left'> Joe Lei, <Stars /> </Table.Cell>
     <Table.Cell singleLine textAlign='right'><Button color='green' value={props.trip.id} onClick={props.handleClick}>Select</Button> </Table.Cell>
    
   </Table.Row>
