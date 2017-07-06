@@ -44,11 +44,7 @@ const reviews = {
     let query = `select avg(overall_rating) as 'overallRating' from driver_reviews where driver_id = ${driverID}`;
     return db.raw(query).then((data) => data[0]);
   }
-}
-
-reviews.getAverageRatingForDriver(5).then((data) => console.log(data));
-reviews.getAllReviewsForDriver(5).then((data) => console.log(data));
-
+};
 
 module.exports = {
   User: User,
