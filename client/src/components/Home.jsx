@@ -3,11 +3,13 @@ import { Container, Header } from 'semantic-ui-react';
 import Search from './Search/Search.jsx';
 import { withRouter } from 'react-router';
 import FeaturedDestinations from './FeaturedDestinations.jsx';
+import rideMap from './utils/what.js';
 
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    rideMap();
   }
 
   render() {
@@ -20,6 +22,10 @@ class Home extends React.Component {
         Go anywhere with a fellow Toad.
       </Header>
       <Search currentUser={this.props.currentUser} />
+      <div className="container">
+        <div id="chartdiv"></div>
+      </div>
+
       <FeaturedDestinations currentUser={this.props.currentUser}/>
     </Container>
     );
