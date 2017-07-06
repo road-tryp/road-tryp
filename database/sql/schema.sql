@@ -19,8 +19,10 @@ CREATE TABLE IF NOT EXISTS users(
     model VARCHAR(50), 
     year VARCHAR(4), 
     type VARCHAR(50), 
-    license_plate VARCHAR(20) 
+    license_plate VARCHAR(20) ,
+    avg_rating INT
     );
+
 
 CREATE TABLE IF NOT EXISTS trips (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -217,3 +219,4 @@ INSERT INTO trips (
   INSERT INTO trips_toads (trip_id, user_id) VALUES ((SELECT id FROM trips WHERE departure_address_line1 = '555 McKinney St'), (SELECT id FROM users WHERE first_name = 'Solomon'));
   INSERT INTO trips_toads (trip_id, user_id) VALUES ((SELECT id FROM trips WHERE departure_address_line1 = '351 King St'), (SELECT id FROM users WHERE first_name = 'Dylan'));
   INSERT INTO trips_toads (trip_id, user_id) VALUES ((SELECT id FROM trips WHERE departure_address_line1 = '728 E 4th St'), (SELECT id FROM users WHERE first_name = 'Kirk'));
+
