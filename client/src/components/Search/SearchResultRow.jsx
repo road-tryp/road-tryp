@@ -14,10 +14,11 @@ class SearchResultRow extends React.Component {
       });
       this.showModal = this.showModal.bind(this);
       this.closeModal = this.closeModal.bind(this);
+
     }
 
   componentDidMount() {
-    //fetch data
+    console.log('search results row props', this.props);
   }
 
   showModal () {
@@ -50,7 +51,7 @@ class SearchResultRow extends React.Component {
             <Table.Cell singleLine>{this.props.trip.seats}</Table.Cell>
             <Table.Cell textAlign='left'><a onClick={this.showModal}>Joe Lei</a>, <Stars /> </Table.Cell>
             <Table.Cell singleLine textAlign='right'><Button color='green' value={this.props.trip.id} onClick={this.props.handleClick}>Select</Button> </Table.Cell>
-            <ReviewsModal dimmer = {true} open = {this.state.open} close = {this.closeModal}  />
+            <ReviewsModal dimmer = {true} open = {this.state.open} close = {this.closeModal}  driverID = {this.props.trip.driver_id}/>
 
          </Table.Row>    
     )
