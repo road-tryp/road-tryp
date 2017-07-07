@@ -8,7 +8,7 @@ import GoogleAuth from '../Authentication/GoogleAuth.jsx';
 import DashboardTableBody from './DashboardTableBody.jsx';
 import DashboardTableHeader from './DashboardTableHeader.jsx';
 import DateTimeParser from '../../../../lib/DateTimeParser.js';
-import UserMessage from '../Users/UserMessage.jsx'
+import UserMessage from '../Users/UserMessage.jsx';
 
 
 class Dashboard extends React.Component{
@@ -16,7 +16,7 @@ class Dashboard extends React.Component{
    
     super(props);
     this.state = { 
-      trips:      {}
+      trips: {}
     };
   }
 

@@ -17,9 +17,7 @@ class SearchResultRow extends React.Component {
 
     }
 
-  componentDidMount() {
-    console.log('search results row props', this.props);
-  }
+
 
   showModal () {
     console.log('ran showModal');
