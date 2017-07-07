@@ -22,12 +22,6 @@ class Home extends React.Component {
     };
   }
 
-  setTripsState(trips) {
-    console.log('hello there;');
-    this.setState({trips:trips})
-    console.log("trips: ",trips);
-  }
-
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value }, this.fetch);
     // date => this.setState({ date })
@@ -66,20 +60,20 @@ class Home extends React.Component {
 
   render() {
     return (
-    <Container>
-      <Header as='h1' id='main-header'>
-        ToadTryp
-      </Header>
-      <Header as='h2' id='main-header2'>
-        Go anywhere with a fellow Toad.
-      </Header>
-      <Search currentUser={this.props.currentUser} depart={this.state.depart} arrive={this.state.arrive} seats={this.state.seats} handleChange={this.handleChange.bind(this)} date={this.state.date} handleDate={this.handleDate.bind(this)} focused={this.state.focused} handleFocus={this.handleFocus.bind(this)}/>
-      <div className="container">
-        <div id="chartdiv"></div>
-      </div>
-      {this.state.trips}
-      <FeaturedDestinations currentUser={this.props.currentUser}/>
-    </Container>
+      <Container>
+        <Header as='h1' id='main-header'>
+          ToadTryp
+        </Header>
+        <Header as='h2' id='main-header2'>
+          Go anywhere with a fellow Toad.
+        </Header>
+        <Search currentUser={this.props.currentUser} depart={this.state.depart} arrive={this.state.arrive} seats={this.state.seats} handleChange={this.handleChange.bind(this)} date={this.state.date} handleDate={this.handleDate.bind(this)} focused={this.state.focused} handleFocus={this.handleFocus.bind(this)}/>
+        <div className="container">
+          <div id="chartdiv"></div>
+        </div>
+        {this.state.trips}
+        <FeaturedDestinations currentUser={this.props.currentUser}/>
+      </Container>
     );
   }
 }

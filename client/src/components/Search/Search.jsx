@@ -6,10 +6,8 @@ import SearchResults from './SearchResults.jsx';
 import {Redirect} from 'react-router-dom';
 import query from 'query-string';
 import moment from 'moment';
-
 // Requirements for AirBnB's React-Calendar
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
-
 
 class Search extends React.Component {
   constructor(props) {
@@ -19,16 +17,12 @@ class Search extends React.Component {
       trips: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-
   }
 
   handleSubmit(e) {
     e.preventDefault();
     this.fetch();
   }
-
-
-
 
   fetch() {
     const depart = this.props.depart;
@@ -65,11 +59,9 @@ class Search extends React.Component {
         <Form.Group inline>
           <Form.Input width={6} type="text" name="depart" placeholder="Depart City" value={this.props.depart} onChange={this.props.handleChange}/>
           <Form.Input width={6} type="text" name="arrive" placeholder="Arrive City" value={this.props.arrive} onChange={this.props.handleChange}/>
-
           <Form.Field width={3}>
             <SingleDatePicker date={this.props.date} onDateChange={date => this.props.handleDate(date)} focused={this.props.focused} onFocusChange={({ focused }) => this.props.handleFocus(focused)} />
           </Form.Field>
-
           <Form.Field width={2}>
             <select className="ui dropdown" color="grey" name="seats" value={this.props.seats} onChange={this.props.handleChange}>
               <option key="Seats" value="#" >Seats</option>
@@ -78,7 +70,6 @@ class Search extends React.Component {
               })}
             </select>
           </Form.Field>
-
           <Button width={1} color="green" type="submit">Search</Button>
         </Form.Group>
 
@@ -92,6 +83,5 @@ class Search extends React.Component {
     );
   }
 }
-
 
 export default Search;
