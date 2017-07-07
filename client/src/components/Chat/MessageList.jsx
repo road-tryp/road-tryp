@@ -4,7 +4,7 @@ const MessageList = (props) => (
   <div className='messages'>
     <h2> Conversation: </h2>
     {
-      this.props.messages.map((message, i) => {
+      props.messages.map((message, i) => {
         return (
           <Message
             key={i}

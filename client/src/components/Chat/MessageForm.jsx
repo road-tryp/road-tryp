@@ -1,9 +1,11 @@
 import React from 'react';
 
 class MessageForm extends React.Component {
-
-  getInitialState() {
-    return { text: '' };
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: ''
+    }
   }
 
   handleSubmit(e) {

@@ -1,5 +1,5 @@
 
-exports.MessageForm = require('./MessageForm');
-exports.Message = require('./Message');
-exports.MessageList = require('./MessageList');
-exports.UsersList = require('./UsersList');
+exports.MessageForm = require('./MessageForm.jsx');
+exports.Message = require('./Message.jsx');
+exports.MessageList = require('./MessageList.jsx');
+exports.UsersList = require('./UsersList.jsx');

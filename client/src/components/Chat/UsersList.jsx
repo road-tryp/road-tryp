@@ -5,7 +5,7 @@ const UsersList = (props) => (
     <h3> Online Users </h3>
     <ul>
       {
-        this.props.users.map((user, i) => {
+        props.users.map((user, i) => {
           return (
             <li key={i}>
               {user}

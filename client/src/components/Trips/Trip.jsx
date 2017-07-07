@@ -6,7 +6,7 @@ import AuthenticationHelper from '../../../../lib/AuhenticationHelper.js';
 import {Redirect} from 'react-router-dom';
 import formatTime from '../utils/formatTime.js';
 import dateParser from '../utils/dateParser.js';
-import Chat from '../Chat/ChatApp';
+import ChatApp from '../Chat/ChatApp.jsx';
 
 class Trip extends React.Component {
   constructor(props) {
@@ -170,7 +170,7 @@ class Trip extends React.Component {
               </Item.Group>
             </Grid.Column>
             <Grid.Column computer={10}>
-              chat box
+              <ChatApp />
             </Grid.Column>
           </Grid.Row>
         </Grid>
