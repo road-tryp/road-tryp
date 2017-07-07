@@ -5,22 +5,23 @@ import MessageList from '../Chat/MessageList.jsx';
 import UsersList from '../Chat/UsersList.jsx';
 
 
+
 class ChatApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       users: ['a','b','c','d'],
-      messages: [],
+      messages: [{user: 'cry',text: 'cry was here oshfaskhksajhf kjsafh kjashf kjashfkjsahf kashfkashf kashfkjash'}, {user: 'crylai',text: 'crylai was here alhfkashdkjsahf kjsahfkjashfkjashfkasfhks fhjkshfksajhfkjfhkjsdfjdskgkdsgflkdfksdbsldiuhgsdlkjvhsofhosudhkdjsfhliusdhfgo;wdfhksdjfhlsdiuufhds '},{user: 'cry',text: 'cry was here oshfaskhksajhf kjsafh kjashf kjashfkjsahf kashfkashf kashfkjash'}, {user: 'crylai',text: 'crylai was here alhfkashdkjsahf kjsahfkjashfkjashfkasfhks fhjkshfksajhfkjfhkjsdfjdskgkdsgflkdfksdbsldiuhgsdlkjvhsofhosudhkdjsfhliusdhfgo;wdfhksdjfhlsdiuufhds '},{user: 'cry',text: 'cry was here oshfaskhksajhf kjsafh kjashf kjashfkjsahf kashfkashf kashfkjash'}, {user: 'crylai',text: 'crylai was here alhfkashdkjsahf kjsahfkjashfkjashfkasfhks fhjkshfksajhfkjfhkjsdfjdskgkdsgflkdfksdbsldiuhgsdlkjvhsofhosudhkdjsfhliusdhfgo;wdfhksdjfhlsdiuufhds '},{user: 'cry',text: 'cry was here oshfaskhksajhf kjsafh kjashf kjashfkjsahf kashfkashf kashfkjash'}, {user: 'crylai',text: 'crylai was here alhfkashdkjsahf kjsahfkjashfkjashfkasfhks fhjkshfksajhfkjfhkjsdfjdskgkdsgflkdfksdbsldiuhgsdlkjvhsofhosudhkdjsfhliusdhfgo;wdfhksdjfhlsdiuufhds '}],
       text: ''
     }
   }
 
-  componentDidMount() {
-    socket.on('init', this._initialize);
-    socket.on('send:message', this._messageRecieve);
-    socket.on('user:join', this._userJoined);
-    socket.on('user:left', this._userLeft);
-  }
+  // componentDidMount() {
+  //   socket.on('init', this._initialize);
+  //   socket.on('send:message', this._messageRecieve);
+  //   socket.on('user:join', this._userJoined);
+  //   socket.on('user:left', this._userLeft);
+  // }
 
   _initialize(data) {
     var { users, name } = data;
