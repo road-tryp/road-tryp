@@ -36,12 +36,11 @@ app.use(bodyParser.json());
 
 
 /**************USERS*****************/
-app.get('/api/users/:tripID', (req, res) => {
-  console.log(req.params.tripID);
+app.get('/api/users/:driverID', (req, res) => {
+  console.log(req.params.driverID);
 
-  models.Reviews.getAllReviewsForDriver(Number(req.params.tripID))
-    .then(data => console.log(data));
-  res.status(200).send({data: 'hello'});
+  models.Reviews.getAllReviewsForDriver(Number(req.params.driverID))
+    .then(data => res.status(200).send(data));
 });
 
 

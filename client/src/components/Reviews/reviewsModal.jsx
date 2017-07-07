@@ -8,6 +8,9 @@ class DriverReviews extends React.Component {
 
 	constructor(props){
 		super(props);
+    this.state = {
+      review: {}
+    }
 	}
 
 	componentDidMount() {
@@ -15,7 +18,10 @@ class DriverReviews extends React.Component {
     axios.get(`/api/users/${this.props.driverID}`)
     .then((data) => {
       console.log(data);
-    })
+      this.setState({
+        review: data[0]
+      });
+    });
 
 
 	}
