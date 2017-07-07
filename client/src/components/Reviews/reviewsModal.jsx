@@ -1,17 +1,23 @@
 import React from 'react';
 import { Button, Header, Image, Modal } from 'semantic-ui-react';
+import axios from 'axios';
+
 
 
 class DriverReviews extends React.Component {
 
 	constructor(props){
 		super(props);
-	
 	}
 
-	
-	componentWillMount() {
-		//fetch driver data
+	componentDidMount() {
+
+    axios.get(`/api/users/${this.props.driverID}`)
+    .then((data) => {
+      console.log(data);
+    })
+
+
 	}
 
 	render() {

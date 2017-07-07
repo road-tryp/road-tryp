@@ -25,6 +25,15 @@ app.use(bodyParser.json());
 
 
 /**************USERS*****************/
+app.get('/api/users/:tripID', (req, res) => {
+  console.log(req.params.tripID);
+
+  models.Reviews.getAllReviewsForDriver(Number(req.params.tripID))
+    .then(data => console.log(data));
+  res.status(200).send({data: 'hello'});
+});
+
+
 app.get('/api/users', (req, res) => {
   console.log('GET /api/users');
   models.Users.fetch().then( (users) => {

@@ -57,8 +57,10 @@ class SearchResults extends React.Component {
                 } else {
                   return (
                   <Table>
-                    <SearchResultTableHeader headers={tableHeaders} />
-                    <SearchResultRow showModal={this.state.showModal} closeModal={this.state.closeModal} isOpen={this.state.open} trip={location.state.trips} driverDetails={location.state.trips.driver} handleClick={this.handleClick}/>
+
+                    <SearchResultTableHeader  headers={tableHeaders} />
+                    <SearchResultRow trip={location.state.trips} driverDetails={location.state.trips.driver} handleClick={this.handleClick}/>
+
                   </Table>);
                 }
               }
