@@ -4,12 +4,64 @@ import Search from './Search/Search.jsx';
 import { withRouter } from 'react-router';
 import FeaturedDestinations from './FeaturedDestinations.jsx';
 import mapChart from './utils/mapChart.js';
+import axios from 'axios';
+import moment from 'moment';
 
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
+
     mapChart();
+    this.state = {
+      depart: '',
+      arrive: '',
+      seats: '',
+      date: moment(),
+      focused: false
+    };
+  }
+
+  setTripsState(trips) {
+    console.log('hello there;');
+    this.setState({trips:trips})
+    console.log("trips: ",trips);
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value }, this.fetch);
+    // date => this.setState({ date })
+    console.log(e.target.name, e.target.value)
+  }
+
+  handleDate(date) {
+    console.log("handle date: ", date);
+    this.setState({date:date}, this.fetch);
+  }
+
+  handleFocus(focused) {
+    console.log("focused: ",focused);
+    this.setState({focused:focused});
+  }
+
+  fetch() {
+    const {depart, arrive, seats} = this.state; // date, seats
+
+    const departdate = moment(this.state.date._d).format('YYYY-MM-DD');
+    console.log(departdate)
+    axios.get('/api/trips', {
+      params: { depart, arrive, departdate, seats }
+    })
+    .then((response) => {
+      console.log('resonse inside axios response data', response.data);
+      // this.setState({
+      //   trips: response.data
+      // });
+      console.log('Successfully fetched trips in the Search Component');
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   render() {
@@ -21,11 +73,11 @@ class Home extends React.Component {
       <Header as='h2' id='main-header2'>
         Go anywhere with a fellow Toad.
       </Header>
-      <Search currentUser={this.props.currentUser} />
+      <Search currentUser={this.props.currentUser} depart={this.state.depart} arrive={this.state.arrive} seats={this.state.seats} handleChange={this.handleChange.bind(this)} date={this.state.date} handleDate={this.handleDate.bind(this)} focused={this.state.focused} handleFocus={this.handleFocus.bind(this)}/>
       <div className="container">
         <div id="chartdiv"></div>
       </div>
-
+      {this.state.trips}
       <FeaturedDestinations currentUser={this.props.currentUser}/>
     </Container>
     );
