@@ -21,7 +21,6 @@ class ChatApp extends React.Component {
   }
 
   componentDidMount() {
-    console.log('user',this.state.user)
     socket.on('init', this._initialize);
     socket.on('chat message', this._messageRecieve);
     socket.on('user:join', this._userJoined);
@@ -36,7 +35,6 @@ class ChatApp extends React.Component {
   _messageRecieve(message) {
     var { messages } = this.state;
     messages.push(message);
-    console.log(message);
     this.setState({ messages });
   }
 
@@ -65,7 +63,6 @@ class ChatApp extends React.Component {
 
   handleMessageSubmit(message) {
     var { messages } = this.state;
-    // messages.push(message);
     this.setState({ messages });
     socket.emit('chat message', message);
   }
