@@ -5,23 +5,25 @@ import MessageList from '../Chat/MessageList.jsx';
 import UsersList from '../Chat/UsersList.jsx';
 import io from 'socket.io-client'
 
-let socket = io('http://localhost:3000');
+let socket = io();
 
 class ChatApp extends React.Component {
   constructor(props) {
     super(props);
     this.user = props.currentUser.username
     this.state = {
-      users: ['a','b','c'],
-      messages: [{user:'cry',text:'msg1'},{user:'somebody',text:'msg2'}],
+      users: [],
+      messages: [],
       text: ''
     }
+    this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
+    this._messageRecieve = this._messageRecieve.bind(this);
   }
 
   componentDidMount() {
     console.log('user',this.state.user)
     socket.on('init', this._initialize);
-    socket.on('send:message', this._messageRecieve);
+    socket.on('chat message', this._messageRecieve);
     socket.on('user:join', this._userJoined);
     socket.on('user:left', this._userLeft);
   }
@@ -34,6 +36,7 @@ class ChatApp extends React.Component {
   _messageRecieve(message) {
     var { messages } = this.state;
     messages.push(message);
+    console.log(message);
     this.setState({ messages });
   }
 
@@ -62,9 +65,9 @@ class ChatApp extends React.Component {
 
   handleMessageSubmit(message) {
     var { messages } = this.state;
-    messages.push(message);
+    // messages.push(message);
     this.setState({ messages });
-    socket.emit('send:message', message);
+    socket.emit('chat message', message);
   }
 
   render() {

@@ -3,7 +3,7 @@ import Message from './Message.jsx';
 
 const MessageList = (props) => (
   <div className='messages'>
-    <h2> Conversation: </h2>
+    <h2> Chat with your trip-mates: </h2>
     {
       props.messages.map((message, i) => {
         return (

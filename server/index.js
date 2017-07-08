@@ -9,9 +9,15 @@ const ADDRESS = '127.0.0.1';
 const PORT = process.env.PORT || 3000;
 const MAX_COOKIE_AGE = 3600000;
 const server = app.listen(3000);
-const io = require('socket.io').listen(server, () => console.log(`Toad Tryp server listening on port ${PORT}`));
+const io = require('socket.io').listen(server);
 
-
+io.on('connection', function(socket){
+  console.log('a user connected');
+  socket.on('chat message', function(msg){
+    console.log('message: ' + msg);
+    io.emit('chat message', msg);
+  });
+});
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
