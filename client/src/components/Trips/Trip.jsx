@@ -24,6 +24,7 @@ class Trip extends React.Component {
   }
 
   componentDidMount() {
+    console.log('props yo',this.props)
     this.fetch(this.match.params.tripId);
   }
 
@@ -170,7 +171,7 @@ class Trip extends React.Component {
               </Item.Group>
             </Grid.Column>
             <Grid.Column computer={10}>
-              <ChatApp />
+              <ChatApp currentUser={this.currentUser}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>

@@ -8,6 +8,8 @@ const app = express();
 const ADDRESS = '127.0.0.1';
 const PORT = process.env.PORT || 3000;
 const MAX_COOKIE_AGE = 3600000;
+const server = app.listen(3000);
+const io = require('socket.io').listen(server, () => console.log(`Toad Tryp server listening on port ${PORT}`));
 
 
 
@@ -267,6 +269,6 @@ app.get('/*', function(req, res){
   // console.log('Session created: ', req.session);
 });
 
-app.listen(PORT, () => {
-  console.log(`Toad Tryp server listening on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Toad Tryp server listening on port ${PORT}`);
+// });

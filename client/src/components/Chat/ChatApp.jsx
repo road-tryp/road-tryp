@@ -3,25 +3,28 @@ import Message from '../Chat/Message.jsx';
 import MessageForm from '../Chat/MessageForm.jsx';
 import MessageList from '../Chat/MessageList.jsx';
 import UsersList from '../Chat/UsersList.jsx';
+import io from 'socket.io-client'
 
-
+let socket = io('http://localhost:3000');
 
 class ChatApp extends React.Component {
   constructor(props) {
     super(props);
+    this.user = props.currentUser.username
     this.state = {
-      users: ['a','b','c','d'],
-      messages: [{user: 'cry',text: 'cry was here oshfaskhksajhf kjsafh kjashf kjashfkjsahf kashfkashf kashfkjash'}, {user: 'crylai',text: 'crylai was here alhfkashdkjsahf kjsahfkjashfkjashfkasfhks fhjkshfksajhfkjfhkjsdfjdskgkdsgflkdfksdbsldiuhgsdlkjvhsofhosudhkdjsfhliusdhfgo;wdfhksdjfhlsdiuufhds '},{user: 'cry',text: 'cry was here oshfaskhksajhf kjsafh kjashf kjashfkjsahf kashfkashf kashfkjash'}, {user: 'crylai',text: 'crylai was here alhfkashdkjsahf kjsahfkjashfkjashfkasfhks fhjkshfksajhfkjfhkjsdfjdskgkdsgflkdfksdbsldiuhgsdlkjvhsofhosudhkdjsfhliusdhfgo;wdfhksdjfhlsdiuufhds '},{user: 'cry',text: 'cry was here oshfaskhksajhf kjsafh kjashf kjashfkjsahf kashfkashf kashfkjash'}, {user: 'crylai',text: 'crylai was here alhfkashdkjsahf kjsahfkjashfkjashfkasfhks fhjkshfksajhfkjfhkjsdfjdskgkdsgflkdfksdbsldiuhgsdlkjvhsofhosudhkdjsfhliusdhfgo;wdfhksdjfhlsdiuufhds '},{user: 'cry',text: 'cry was here oshfaskhksajhf kjsafh kjashf kjashfkjsahf kashfkashf kashfkjash'}, {user: 'crylai',text: 'crylai was here alhfkashdkjsahf kjsahfkjashfkjashfkasfhks fhjkshfksajhfkjfhkjsdfjdskgkdsgflkdfksdbsldiuhgsdlkjvhsofhosudhkdjsfhliusdhfgo;wdfhksdjfhlsdiuufhds '}],
+      users: ['a','b','c'],
+      messages: [{user:'cry',text:'msg1'},{user:'somebody',text:'msg2'}],
       text: ''
     }
   }
 
-  // componentDidMount() {
-  //   socket.on('init', this._initialize);
-  //   socket.on('send:message', this._messageRecieve);
-  //   socket.on('user:join', this._userJoined);
-  //   socket.on('user:left', this._userLeft);
-  // }
+  componentDidMount() {
+    console.log('user',this.state.user)
+    socket.on('init', this._initialize);
+    socket.on('send:message', this._messageRecieve);
+    socket.on('user:join', this._userJoined);
+    socket.on('user:left', this._userLeft);
+  }
 
   _initialize(data) {
     var { users, name } = data;
@@ -75,7 +78,7 @@ class ChatApp extends React.Component {
         />
         <MessageForm
           onMessageSubmit={this.handleMessageSubmit}
-          user={this.state.user}
+          user={this.user}
         />
       </div>
     );
