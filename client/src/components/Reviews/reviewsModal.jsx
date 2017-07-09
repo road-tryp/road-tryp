@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Header, Image, Modal, Item, Rating } from 'semantic-ui-react';
+import { Button, Header, Image, Modal, Item, Rating, Grid, Segment, Divider, Label } from 'semantic-ui-react';
 import axios from 'axios';
 import ReviewCard from './ReviewCard.jsx';
 
@@ -9,15 +9,16 @@ class DriverReviews extends React.Component {
 		super(props);
     this.state = {
       review: [{driver: 'Joe', accuracy_rating: 4, communication_rating: 3, driving_rating: 5, overall_rating: 4, rider: 'Dylan', written_review: 'This tryp was pretty cool I guess'}, {driver: 'Joe', accuracy_rating: 4, communication_rating: 3, driving_rating: 5, overall_rating: 1, rider: 'Dylan', written_review: 'Meh'}],
-      ratings: ''
+      ratings: {accuracyRating:4 ,communicationRating: 3, drivingRating: 5, overallRating: 5}
     }
+
+
 	}
 
 	componentWillMount() {
 
     axios.get(`/api/users/${this.props.driverID}`)
     .then((data) => {
-      // console.log('data inside fetch', data);
       this.setState({
         review: data.data.data,
         ratings: data.data.ratings
@@ -28,15 +29,46 @@ class DriverReviews extends React.Component {
 	}
 
 	render() {
-    
+
+          const { accuracyRating, communicationRating, drivingRating, overallRating } = this.state.ratings;
+
+
       return (<div>
        <Modal dimmer={this.props.dimmer} open={this.props.open} onClose={this.props.close}>
           <Modal.Header>{this.state.review[0].driver}'s Reviews</Modal.Header>
 
-            <Rating maxRating={5} defaultRating={3} icon='star' size='massive' />
-            <Rating maxRating={5} defaultRating={3} icon='star' size='huge' />
-            <Rating maxRating={5} defaultRating={3} icon='star' size='huge' />
-            <Rating maxRating={5} defaultRating={3} icon='star' size='huge' />
+        <Grid>
+        <Divider hidden/>
+          <Grid.Row>
+            <Grid.Column textAlign={'center'}>
+            <div><Label size='big' pointing='down' > Overall </Label></div><br/>
+                <Rating maxRating={5} defaultRating={overallRating} icon='star' size='massive' />
+            </Grid.Column>
+
+          </Grid.Row>
+
+          </Grid>
+
+        <Grid columns={3} divided>
+
+          <Grid.Row>
+            <Grid.Column textAlign={'center'}>
+                <div><Label size='medium' pointing='down' > Driving </Label></div><br/>
+              <Rating maxRating={5} defaultRating={drivingRating} disabled={true} icon='star' size='huge' />
+
+            </Grid.Column>
+            <Grid.Column textAlign={'center'}>
+                            <div><Label size='medium' pointing='down' > Communication </Label></div><br/>
+              <Rating maxRating={5} defaultRating={communicationRating} disabled={true} icon='star' size='huge' />
+
+            </Grid.Column>
+            <Grid.Column textAlign={'center'}>
+                                        <div><Label size='medium' pointing='down' > Accuracy </Label></div><br/>
+              <Rating maxRating={5} defaultRating={accuracyRating} disabled={true} icon='star' size='huge' />
+
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
 
             
           <Item.Group>
