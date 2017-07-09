@@ -3,13 +3,14 @@ const session = require('express-session');
 const path = require('path');
 const bodyParser = require('body-parser');
 const models = require('../database/models/models.js');
-
+const cityCoord = require('../database/cityCoord.js');
 const app = express();
 const ADDRESS = '127.0.0.1';
 const PORT = process.env.PORT || 3000;
 const MAX_COOKIE_AGE = 3600000;
+var Promise = require('bluebird');
 
-
+const db = require('../database/bookshelf').knex;
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
@@ -143,20 +144,51 @@ app.post('/api/users', (req, res) => {
   });
 });
 
-/**************TRIPS***************/
-
-
-app.get('/api/trips', (req, res) => {
-  console.log('GET /api/trips/\n', req.query);
+/**************Maps***************/
+app.get('/api/maps/', (req, res) => {
+  console.log('GET /api/maps/\n', req.query);
   const search = {};
   if (req.query.depart) search.departure_city = req.query.depart;
   if (req.query.arrive) search.arrival_city = req.query.arrive;
-  if (req.query.departdate) search.departure_date = req.query.departdate
-  models.Trip.where(search)
-  .fetchAll({withRelated: ['driver','riders']})
+  if (req.query.departdate) search.departure_date = req.query.departdate;
+
+
+  let query = `select * from trips
+               where departure_city LIKE '${req.query.depart}%' and
+                     arrival_city LIKE '${req.query.arrive}%' and
+                     departure_date = '2017-07-08';`;
+  console.log('query: ', query);
+  db.raw(query)
   .then((trips) => {
-    console.log('\tSUCCESS\n');
-    res.status(200).json(trips);
+    if(trips.length !== 0) {
+      //keep add coordinate information for each city and store it in tripsWithCoord
+      let tripsWithCoord = [];
+      //Iterate each trip info and add city coordinates
+      console.log('trips models: ', trips[0])
+      Promise.each(trips[0], function(trip) {
+        return cityCoord(trip.arrival_city, trip.departure_city).then((data) => {
+          trip.depart_city_coord = data[0];
+          trip.arrival_city_coord = data[1];
+          tripsWithCoord.push(trip);
+        //handling file error
+        }).catch((error) => {
+          console.log('file error handling files, ', error);
+          // next catch will receive error
+          throw error;
+        })
+      }).then((data) => {
+        //print coordinates for each city
+        data.forEach(city => {
+          console.log(city.depart_city_coord);
+          console.log(city.arrival_city_coord);
+        })
+        console.log('\tSUCCESS\n');
+        //send modifyied trips
+        res.status(200).json(data);
+      })
+    } else {
+      res.status(200).json(trips);
+    }
   })
   .catch((err) => {
     console.log('ERROR GETting Trips collection: ', err);
@@ -164,6 +196,23 @@ app.get('/api/trips', (req, res) => {
   });
 });
 
+app.get('/api/trips', (req, res) => {
+ console.log('GET /api/trips/\n', req.query);
+ const search = {};
+ if (req.query.depart) search.departure_city = req.query.depart;
+ if (req.query.arrive) search.arrival_city = req.query.arrive;
+ if (req.query.departdate) search.departure_date = req.query.departdate
+ models.Trip.where(search)
+ .fetchAll({withRelated: ['driver','riders']})
+ .then((trips) => {
+   console.log('\tSUCCESS\n');
+   res.status(200).json(trips);
+ })
+ .catch((err) => {
+   console.log('ERROR GETting Trips collection: ', err);
+   res.status(404).send(err);
+ });
+});
 
 app.get('/api/trips/:tripId', (req,res) => {
   const id = req.params.tripId;
