@@ -12,14 +12,19 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
 
-    mapChart();
     this.state = {
+      trips: [],
       depart: '',
       arrive: '',
       seats: '',
       date: moment(),
+      isLoading: false,
       focused: false
     };
+  }
+
+  componentDidMount(){
+    this.fetch();
   }
 
   handleChange(e) {
@@ -40,7 +45,6 @@ class Home extends React.Component {
 
   fetch() {
     const {depart, arrive, seats} = this.state; // date, seats
-
     const departdate = moment(this.state.date._d).format('YYYY-MM-DD');
     console.log(departdate)
     axios.get('/api/trips', {
@@ -48,10 +52,9 @@ class Home extends React.Component {
     })
     .then((response) => {
       console.log('resonse inside axios response data', response.data);
-      // this.setState({
-      //   trips: response.data
-      // });
-      console.log('Successfully fetched trips in the Search Component');
+      this.setState({
+        trips: response.data
+      },  function(){mapChart(response.data);});
     })
     .catch(function (error) {
       console.log(error);
@@ -71,7 +74,7 @@ class Home extends React.Component {
         <div className="container">
           <div id="chartdiv"></div>
         </div>
-        {this.state.trips}
+
         <FeaturedDestinations currentUser={this.props.currentUser}/>
       </Container>
     );

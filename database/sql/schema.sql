@@ -4,25 +4,24 @@ USE toads;
 -- USE heroku_e8a2cb7b5c6d858;
 
 
-CREATE TABLE IF NOT EXISTS users( 
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-    username  VARCHAR(100) NOT NULL, 
-    first_name VARCHAR(50) NOT NULL, 
-    last_name VARCHAR(50) NOT NULL, 
-    email VARCHAR(100), 
-    password VARCHAR(512) NOT NULL, 
-    img_url VARCHAR(1024), 
-    phone_number VARCHAR(20), 
-    token VARCHAR(2048), 
-    vin VARCHAR(50), 
-    make VARCHAR(50), 
-    model VARCHAR(50), 
-    year VARCHAR(4), 
-    type VARCHAR(50), 
-    license_plate VARCHAR(20) ,
-    avg_rating INT
-    );
-
+CREATE TABLE IF NOT EXISTS users(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  username  VARCHAR(100) NOT NULL,
+  first_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50) NOT NULL,
+  email VARCHAR(100),
+  password VARCHAR(512) NOT NULL,
+  img_url VARCHAR(1024),
+  phone_number VARCHAR(20),
+  token VARCHAR(2048),
+  vin VARCHAR(50),
+  make VARCHAR(50),
+  model VARCHAR(50),
+  year VARCHAR(4),
+  type VARCHAR(50),
+  license_plate VARCHAR(20) ,
+  avg_rating INT
+);
 
 CREATE TABLE IF NOT EXISTS trips (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -60,10 +59,10 @@ CREATE TABLE IF NOT EXISTS trips_toads (
   REFERENCES `users` (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS driver_reviews( 
-    id INT NOT NULL AUTO_INCREMENT, 
-    rider_id INT NOT NULL, 
-    driver_id INT NOT NULL, 
+CREATE TABLE IF NOT EXISTS driver_reviews(
+    id INT NOT NULL AUTO_INCREMENT,
+    rider_id INT NOT NULL,
+    driver_id INT NOT NULL,
     overall_rating INT NOT NULL,
     communication_rating INT NOT NULL,
     driving_rating INT NOT NULL,
@@ -75,7 +74,7 @@ CREATE TABLE IF NOT EXISTS driver_reviews(
     FOREIGN KEY (driver_id) REFERENCES users(id)
     );
 
--- DUMMY DATA -- 
+-- DUMMY DATA --
 
 INSERT INTO users (username, email, password, img_url, phone_number, first_name, last_name) VALUES ('jun123', 'jun@abc.com', '123456', 'https://lh3.google.com/u/0/d/0B5jkFvXDZd_WZzNGY0xtalg4QWc=w2878-h1472-iv1', '719-420-7890', 'Jun', 'Park');
 INSERT INTO users (username, email, password, img_url, phone_number, first_name, last_name) VALUES ('solomon123', '123@abc.com', '123456', 'https://lh3.google.com/u/0/d/0B5jkFvXDZd_WT2tnY0xxdzRXM1U=w2878-h1472-iv1', '123-456-7890', 'Solomon', 'Tang');
@@ -86,29 +85,29 @@ INSERT INTO users (username, email, password, img_url, phone_number, first_name,
 INSERT INTO users (username, email, password, img_url, phone_number, first_name, last_name, vin, make, model, year, type, license_plate) VALUES ('donald123', 'donald@abc.com', 'mickey', 'https://static.comicvine.com/uploads/original/0/77/4338755-donald-duck-30.jpg', '909-000-0001', 'Donald', 'Duck', '1mk2jnj3ni1', 'Ford', 'Explorer', '2015', 'SUV', '123XYZ');
 
 INSERT INTO trips (
-  driver_id, 
-  departure_date, 
-  departure_time, 
-  departure_address_line1, 
+  driver_id,
+  departure_date,
+  departure_time,
+  departure_address_line1,
   departure_city,
   departure_state,
   departure_zip,
   arrival_date,
   arrival_time,
   arrival_address_line1,
-  arrival_city, 
+  arrival_city,
   arrival_state,
   arrival_zip,
   seats,
   price) VALUES (
     (SELECT id FROM users WHERE first_name = 'Donald'),
-    '2017-07-07',
+    '2017-07-08',
     '04:25:36',
     '944 Market St',
     'San Francisco',
     'CA',
     94102,
-    '2017-07-07',
+    '2017-07-08',
     '08:30:30',
     '101 Sunset Blvd',
     'Los Angeles',
@@ -118,32 +117,32 @@ INSERT INTO trips (
     65
   );
   INSERT INTO trips (
-  driver_id, 
-  departure_date, 
-  departure_time, 
-  departure_address_line1, 
+  driver_id,
+  departure_date,
+  departure_time,
+  departure_address_line1,
   departure_city,
   departure_state,
   departure_zip,
   arrival_date,
   arrival_time,
   arrival_address_line1,
-  arrival_city, 
+  arrival_city,
   arrival_state,
   arrival_zip,
   seats,
   price) VALUES (
     (SELECT id FROM users WHERE first_name = 'James'),
-    '2017-07-07',
+    '2017-07-08',
     '07:25:36',
     '555 McKinney St',
     'San Francisco',
     'CA',
     94158,
-    '2017-07-07',
+    '2017-07-08',
     '11:30:30',
     '1564 Mission St.',
-    'Los Angeles',
+    'Napa',
     'CA',
     90210,
     2,
@@ -151,29 +150,29 @@ INSERT INTO trips (
   );
 
   INSERT INTO trips (
-  driver_id, 
-  departure_date, 
-  departure_time, 
-  departure_address_line1, 
+  driver_id,
+  departure_date,
+  departure_time,
+  departure_address_line1,
   departure_city,
   departure_state,
   departure_zip,
   arrival_date,
   arrival_time,
   arrival_address_line1,
-  arrival_city, 
+  arrival_city,
   arrival_state,
   arrival_zip,
   seats,
   price) VALUES (
     (SELECT id FROM users WHERE first_name = 'Donald'),
-    '2017-07-07',
+    '2017-07-08',
     '08:25:36',
     '351 King St',
     'San Francisco',
     'CA',
     94102,
-    '2017-07-07',
+    '2017-07-08',
     '18:30:30',
     '15 NE 4th St',
     'Los Angeles',
@@ -183,29 +182,29 @@ INSERT INTO trips (
     70
   );
   INSERT INTO trips (
-  driver_id, 
-  departure_date, 
-  departure_time, 
-  departure_address_line1, 
+  driver_id,
+  departure_date,
+  departure_time,
+  departure_address_line1,
   departure_city,
   departure_state,
   departure_zip,
   arrival_date,
   arrival_time,
   arrival_address_line1,
-  arrival_city, 
+  arrival_city,
   arrival_state,
   arrival_zip,
   seats,
   price) VALUES (
     (SELECT id FROM users WHERE first_name = 'Donald'),
-    '2017-07-07',
+    '2017-07-08',
     '07:25:36',
     '728 E 4th St',
     'Pueblo',
     'CO',
     81001,
-    '2017-07-07',
+    '2017-07-08',
     '09:35:15',
     '2203 S Josephine St',
     'Denver',
