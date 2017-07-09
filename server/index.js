@@ -144,10 +144,14 @@ app.post('/api/users', (req, res) => {
   });
 });
 
-/**************TRIPS***************/
-app.get('/api/trips', (req, res) => {
-  console.log('GET /api/trips/\n', req.query);
+/**************Maps***************/
+app.get('/api/maps/', (req, res) => {
+  console.log('GET /api/maps/\n', req.query);
   const search = {};
+  if (req.query.depart) search.departure_city = req.query.depart;
+  if (req.query.arrive) search.arrival_city = req.query.arrive;
+  if (req.query.departdate) search.departure_date = req.query.departdate;
+
 
   let query = `select * from trips
                where departure_city LIKE '${req.query.depart}%' and
@@ -190,6 +194,24 @@ app.get('/api/trips', (req, res) => {
     console.log('ERROR GETting Trips collection: ', err);
     res.status(404).send(err);
   });
+});
+
+app.get('/api/trips', (req, res) => {
+ console.log('GET /api/trips/\n', req.query);
+ const search = {};
+ if (req.query.depart) search.departure_city = req.query.depart;
+ if (req.query.arrive) search.arrival_city = req.query.arrive;
+ if (req.query.departdate) search.departure_date = req.query.departdate
+ models.Trip.where(search)
+ .fetchAll({withRelated: ['driver','riders']})
+ .then((trips) => {
+   console.log('\tSUCCESS\n');
+   res.status(200).json(trips);
+ })
+ .catch((err) => {
+   console.log('ERROR GETting Trips collection: ', err);
+   res.status(404).send(err);
+ });
 });
 
 app.get('/api/trips/:tripId', (req,res) => {

@@ -47,7 +47,7 @@ class Home extends React.Component {
     const {depart, arrive, seats} = this.state; // date, seats
     const departdate = moment(this.state.date._d).format('YYYY-MM-DD');
     console.log(departdate)
-    axios.get('/api/trips', {
+    axios.get('/api/maps', {
       params: { depart, arrive, departdate, seats }
     })
     .then((response) => {
