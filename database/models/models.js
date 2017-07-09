@@ -33,15 +33,16 @@ const reviews = {
   },
 
   getAllReviewsForDriver: (driverID) => {
-    let query = `select u.first_name as "rider", utwo.first_name as "driver", r.overall_rating, r.communication_rating,   r.driving_rating, r.accuracy_rating, r.written_review from users u 
+    let query = `select u.first_name as "rider", utwo.first_name as "driver", r.overall_rating, r.communication_rating,   r.driving_rating, r.accuracy_rating, r.written_review, t.departure_city, t.arrival_city from users u 
       join driver_reviews r on r.rider_id = u.id 
       join users utwo on utwo.id = r.driver_id 
+      join trips t on t.id = r.trip_id
       where r.driver_id = ${driverID}`; 
     return db.raw(query).then((data) => data[0]);
   },
 
   getAverageRatingForDriver : (driverID) => {
-    let query = `select avg(overall_rating) as 'overallRating' from driver_reviews where driver_id = ${driverID}`;
+    let query = `select avg(overall_rating) as 'overallRating', avg(communication_rating) as 'communicationRating', avg(driving_rating) as 'drivingRating', avg(accuracy_rating) as 'accuracyRating' from driver_reviews where driver_id = ${driverID}`;
     return db.raw(query).then((data) => data[0]);
   }
 };
@@ -55,3 +56,4 @@ module.exports = {
   TripToads: TripToad.collection(TripToad),
   Reviews: reviews
 };
+

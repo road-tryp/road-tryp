@@ -39,8 +39,23 @@ app.use(bodyParser.json());
 app.get('/api/users/:driverID', (req, res) => {
   console.log(req.params.driverID);
 
+  let returnObj = {};
+
   models.Reviews.getAllReviewsForDriver(Number(req.params.driverID))
-    .then(data => res.status(200).send(data));
+    .then((data) => {
+      returnObj.data = data;
+      return;
+    })
+    .then((obj) => {
+     return models.Reviews.getAverageRatingForDriver(Number(req.params.driverID))
+    })
+    .then((data) => {
+      returnObj.ratings = data[0];
+      return returnObj;
+    })
+    .then((data) => {
+      res.status(200).send(data);
+    })
 });
 
 
