@@ -8,6 +8,8 @@ import formatTime from '../utils/formatTime.js';
 import dateParser from '../utils/dateParser.js';
 import ChatApp from '../Chat/ChatApp.jsx';
 import AddReviewModal from '../Reviews/AddReviewModal.jsx';
+import ReviewsModal from '../Reviews/reviewsModal.jsx';
+import StarRating from '../Reviews/MiniStars.jsx';
 
 class Trip extends React.Component {
   constructor(props) {
@@ -19,9 +21,11 @@ class Trip extends React.Component {
       trips: {
         driver: {},
         riders: [{id: 0}],
-        driverID: 1
       },
-      openModal: false
+      driverID: 6,
+      overallRating: 5,
+      openAddReviewModal: false,
+      openReviewModal: false
     }
     this.handleRequestTrip.bind(this); 
   }
@@ -39,17 +43,32 @@ class Trip extends React.Component {
     this.postTripRequest(this.state.trips.id, this.currentUser.id)
   }
 
-  showModal () {
-    console.log('ran showModal');
+  showAddReviewModal () {
+    console.log('ran showAddReviewModal');
     this.setState({
-      openModal: true
+      openAddReviewModal: true
     });
   }
 
-  closeModal() {
-    console.log('ran closeModal');
+  closeAddReviewModal() {
+    console.log('ran closeAddReviewModal');
     this.setState({
-      openModal: false
+      openAddReviewModal: false
+    });
+  }
+
+
+  showReviewModal () {
+    console.log('ran showReviewModal');
+    this.setState({
+      openReviewModal: true
+    });
+  }
+
+  closeReviewModal() {
+    console.log('ran closeReviewModal');
+    this.setState({
+      openReviewModal: false
     });
   }
 
@@ -61,7 +80,24 @@ class Trip extends React.Component {
         redirectTo: this.state.redirectTo,
         trips: response.data
       });
-      console.log('driver: ',response.data.driver, '\n rider ID: ', response.data.riders[0]['id']);
+      return response;
+    })
+    .then((data) => {
+      this.setState({
+        driverID: data.data.driver.id
+      });
+      return data;
+    })
+    .then((data) => {
+
+       axios.get(`/api/driver-ratings/${data.data.driver.id}`)
+        .then((data) => {
+          console.log('overall rating', data.data[0].overall_rating);
+            this.setState({
+             overallRating: data.data[0].overall_rating
+            });
+        });
+
     })
     .catch((error) => {
       console.log('GET unsuccessful from the DB in Trip Component', error);
@@ -139,14 +175,17 @@ class Trip extends React.Component {
                 </Card.Header>
                 <Card.Meta>
                   <span className='date'>
-                    Joined in 2017
+                    Joined in 2017 <br />
+                    <StarRating rating = {this.state.overallRating}/>
+                    <a onClick={this.showReviewModal.bind(this)}>Read Reviews </a>
+
                   </span>
                 </Card.Meta>
                 <Card.Description>
                   <Icon name='mail outline' /> {trips.driver.email} <br/>
                   <Icon name='phone'/> {trips.driver.phone_number}<br/>
                   <Icon name='car'/> {trips.driver.year} {trips.driver.make} {trips.driver.model} <br/>
-                  <a onClick={this.showModal.bind(this)}> Write a Review </a>
+                  <a onClick={this.showAddReviewModal.bind(this)}> Write a Review </a>
                 </Card.Description>
               </Card.Content>
               <Card.Content extra>
@@ -207,7 +246,10 @@ class Trip extends React.Component {
           state: {location, match, currentUser}
         }} />}
 
-        <AddReviewModal close={this.closeModal.bind(this)} dimmer={true} open={this.state.openModal} driverID = {this.state.trips.driverID} tripID = {this.state.trips.id} riderID = {this.state.trips.riders[0].id} />
+        <AddReviewModal close={this.closeAddReviewModal.bind(this)} dimmer={true} open={this.state.openAddReviewModal} driverID = {this.state.trips.driverID} tripID = {this.state.trips.id} riderID = {this.state.trips.riders[0].id} />
+
+          <ReviewsModal dimmer = {true} open = {this.state.openReviewModal} close = {this.closeReviewModal.bind(this)}  driverID = {this.state.driverID}/>
+
       </Container>
     )
   }
