@@ -8,7 +8,7 @@ class DriverReviews extends React.Component {
 	constructor(props){
 		super(props);
     this.state = {
-      review: [{driver: 'Joe', accuracy_rating: 4, communication_rating: 3, driving_rating: 5, overall_rating: 4, rider: 'Dylan', written_review: 'This tryp was pretty cool I guess'}, {driver: 'Joe', accuracy_rating: 4, communication_rating: 3, driving_rating: 5, overall_rating: 1, rider: 'Dylan', written_review: 'Meh'}],
+      review: [{driver: 'Joe', accuracy_rating: 4, communication_rating: 3, driving_rating: 5, overall_rating: 4, rider: 'Dylan', written_review: 'This tryp was pretty cool I guess', add_date: '2017-07-09'}, {driver: 'Joe', accuracy_rating: 4, communication_rating: 3, driving_rating: 5, overall_rating: 1, rider: 'Dylan', written_review: 'Meh'}],
       ratings: {accuracyRating:4 ,communicationRating: 3, drivingRating: 5, overallRating: 5}
     }
 
@@ -41,7 +41,7 @@ class DriverReviews extends React.Component {
         <Divider hidden/>
           <Grid.Row>
             <Grid.Column textAlign={'center'}>
-            <div><Label size='big' pointing='down' > Overall </Label></div><br/>
+            <div><Label size='big' pointing='below' > Overall </Label></div><br/>
                 <Rating maxRating={5} defaultRating={overallRating} icon='star' size='massive' />
             </Grid.Column>
 
@@ -53,32 +53,35 @@ class DriverReviews extends React.Component {
 
           <Grid.Row>
             <Grid.Column textAlign={'center'}>
-                <div><Label size='medium' pointing='down' > Driving </Label></div><br/>
+                <div><Label size='medium' pointing='below' > Driving </Label></div><br/>
               <Rating maxRating={5} defaultRating={drivingRating} disabled={true} icon='star' size='huge' />
 
             </Grid.Column>
             <Grid.Column textAlign={'center'}>
-                            <div><Label size='medium' pointing='down' > Communication </Label></div><br/>
+                            <div><Label size='medium' pointing='below' > Communication </Label></div><br/>
               <Rating maxRating={5} defaultRating={communicationRating} disabled={true} icon='star' size='huge' />
 
             </Grid.Column>
             <Grid.Column textAlign={'center'}>
-                                        <div><Label size='medium' pointing='down' > Accuracy </Label></div><br/>
+                                        <div><Label size='medium' pointing='below' > Accuracy </Label></div><br/>
               <Rating maxRating={5} defaultRating={accuracyRating} disabled={true} icon='star' size='huge' />
 
             </Grid.Column>
           </Grid.Row>
         </Grid>
 
+        <Divider />
+
             
           <Item.Group>
 
             {this.state.review.map((review, key) => {
-              const {driver, accuracy_rating, communication_rating, driving_rating, overall_rating, rider, written_review, arrival_city, departure_city} = review;
-              return <ReviewCard key={key} driver={driver} accuracy_rating={accuracy_rating} communication_rating={communication_rating} driving_rating = {driving_rating} overall_rating = {overall_rating} rider={rider} written_review={written_review} arrival_city={arrival_city} departure_city={departure_city}  />
+              const {driver, accuracy_rating, communication_rating, driving_rating, overall_rating, rider, written_review, arrival_city, departure_city, add_date} = review;
+              return <ReviewCard add_date={add_date} key={key} driver={driver} accuracy_rating={accuracy_rating} communication_rating={communication_rating} driving_rating = {driving_rating} overall_rating = {overall_rating} rider={rider} written_review={written_review} arrival_city={arrival_city} departure_city={departure_city}  />
             })}
   
           </Item.Group>
+
           </Modal>
 
     </div>)

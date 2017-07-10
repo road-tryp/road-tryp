@@ -33,7 +33,7 @@ const reviews = {
   },
 
   getAllReviewsForDriver: (driverID) => {
-    let query = `select u.first_name as "rider", utwo.first_name as "driver", r.overall_rating, r.communication_rating,   r.driving_rating, r.accuracy_rating, r.written_review, t.departure_city, t.arrival_city from users u 
+    let query = `select u.first_name as "rider", utwo.first_name as "driver", r.overall_rating, r.communication_rating,   r.driving_rating, r.accuracy_rating, r.written_review, r.add_date as "add_date", t.departure_city, t.arrival_city from users u 
       join driver_reviews r on r.rider_id = u.id 
       join users utwo on utwo.id = r.driver_id 
       join trips t on t.id = r.trip_id
