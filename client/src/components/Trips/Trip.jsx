@@ -7,6 +7,7 @@ import {Redirect} from 'react-router-dom';
 import formatTime from '../utils/formatTime.js';
 import dateParser from '../utils/dateParser.js';
 import ChatApp from '../Chat/ChatApp.jsx';
+import AddReviewModal from '../Reviews/AddReviewModal.jsx';
 
 class Trip extends React.Component {
   constructor(props) {
@@ -17,20 +18,39 @@ class Trip extends React.Component {
       redirectTo: null,
       trips: {
         driver: {},
-        rider: {}
-      }
+        riders: [{id: 0}],
+        driverID: 1
+      },
+      openModal: false
     }
-    this.handleRequestTrip.bind(this);
+    this.handleRequestTrip.bind(this); 
   }
 
-  componentDidMount() {
-    console.log('props yo',this.props)
+  componentWillMount() {
+
+    console.log('this.match', this.props.match)
+    console.log('currentUser', this.currentUser)
+    
     this.fetch(this.match.params.tripId);
   }
 
   handleRequestTrip(e) {
     e.preventDefault();
     this.postTripRequest(this.state.trips.id, this.currentUser.id)
+  }
+
+  showModal () {
+    console.log('ran showModal');
+    this.setState({
+      openModal: true
+    });
+  }
+
+  closeModal() {
+    console.log('ran closeModal');
+    this.setState({
+      openModal: false
+    });
   }
 
   fetch(tripId) {
@@ -41,7 +61,7 @@ class Trip extends React.Component {
         redirectTo: this.state.redirectTo,
         trips: response.data
       });
-      console.log('driver: ',response.data.driver, '\n rider: ', response.data.riders);
+      console.log('driver: ',response.data.driver, '\n rider ID: ', response.data.riders[0]['id']);
     })
     .catch((error) => {
       console.log('GET unsuccessful from the DB in Trip Component', error);
@@ -125,7 +145,8 @@ class Trip extends React.Component {
                 <Card.Description>
                   <Icon name='mail outline' /> {trips.driver.email} <br/>
                   <Icon name='phone'/> {trips.driver.phone_number}<br/>
-                  <Icon name='car'/> {trips.driver.year} {trips.driver.make} {trips.driver.model}
+                  <Icon name='car'/> {trips.driver.year} {trips.driver.make} {trips.driver.model} <br/>
+                  <a onClick={this.showModal.bind(this)}> Write a Review </a>
                 </Card.Description>
               </Card.Content>
               <Card.Content extra>
@@ -185,6 +206,8 @@ class Trip extends React.Component {
           pathname: redirectTo,
           state: {location, match, currentUser}
         }} />}
+
+        <AddReviewModal close={this.closeModal.bind(this)} dimmer={true} open={this.state.openModal} driverID = {this.state.trips.driverID} tripID = {this.state.trips.id} riderID = {this.state.trips.riders[0].id} />
       </Container>
     )
   }

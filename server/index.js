@@ -36,8 +36,33 @@ app.use(bodyParser.json());
 
 
 /**************USERS*****************/
+
+app.get('/api/driver-ratings/:driverID', (req, res) => {
+
+
+  models.Reviews.getOverallRatingForDriver(req.params.driverID)
+  .then((data) => {
+    res.status(200).send(data);
+  });
+ 
+});
+
+
+app.post('/api/add-review', (req, res) => {
+    models.Reviews.addReview(req.body)
+    .then((data) => {
+      console.log('insert data', data);
+    })
+
+
+  res.status(200).send(req.body);
+
+  console.log('add review end point', req.body);
+
+});
+
+
 app.get('/api/users/:driverID', (req, res) => {
-  console.log(req.params.driverID);
 
   let returnObj = {};
 
@@ -55,7 +80,7 @@ app.get('/api/users/:driverID', (req, res) => {
     })
     .then((data) => {
       res.status(200).send(data);
-    })
+    });
 });
 
 

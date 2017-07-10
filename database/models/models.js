@@ -44,6 +44,28 @@ const reviews = {
   getAverageRatingForDriver : (driverID) => {
     let query = `select avg(overall_rating) as 'overallRating', avg(communication_rating) as 'communicationRating', avg(driving_rating) as 'drivingRating', avg(accuracy_rating) as 'accuracyRating' from driver_reviews where driver_id = ${driverID}`;
     return db.raw(query).then((data) => data[0]);
+  },
+
+  getOverallRatingForDriver: (driverID) => {
+    let query = `select overall_rating from driver_reviews where driver_id = ${driverID}`;
+    return db.raw(query).then((data) => data[0]);
+  },
+
+  getDriverID: (tripID) => {
+    let query = `select driver_id from trips where id = ${tripID}`;
+    return db.raw(query).then((data) => data[0]);
+  },
+
+  addReview: ({overallRating, accuracyRating, communicationRating, writtenReview, riderID, tripID, drivingRating}) => {
+
+    return reviews.getDriverID(tripID)
+    .then((data) => {
+
+      let query = `INSERT INTO driver_reviews (rider_id, driver_id, overall_rating, communication_rating, driving_rating, accuracy_rating, written_review, trip_id) VALUES (${riderID}, ${data[0].driver_id}, ${overallRating}, ${communicationRating}, ${drivingRating}, ${accuracyRating}, "${writtenReview}", ${tripID})`;
+
+      return db.raw(query).then((data) => data);
+    });
+
   }
 };
 

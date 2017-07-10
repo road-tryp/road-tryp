@@ -224,5 +224,5 @@ INSERT INTO trips (
 
     INSERT INTO driver_reviews ( rider_id,driver_id, overall_rating, communication_rating, driving_rating, accuracy_rating, written_review, trip_id ) VALUES (1, 2, 4, 3, 5, 3, 'This was a great trip. Thank you!!',4);
     INSERT INTO driver_reviews ( rider_id,driver_id, overall_rating, communication_rating, driving_rating, accuracy_rating, written_review, trip_id ) VALUES (2, 3, 4, 3, 5, 1, 'This tryp was aight',3);
-INSERT INTO driver_reviews ( rider_id,driver_id, overall_rating, communication_rating, driving_rating, accuracy_rating, written_review, trip_id ) VALUES (4, 6, 4, 3, 5, 2, 'This tryp was pretty cool I guess', 2);
+INSERT INTO driver_reviews ( rider_id,driver_id, overall_rating, communication_rating, driving_rating, accuracy_rating, written_review, trip_id ) VALUES (4, 6, 5, 5, 5, 5, 'This tryp was pretty cool I guess', 2);
 INSERT INTO driver_reviews ( rider_id,driver_id, overall_rating, communication_rating, driving_rating, accuracy_rating, written_review, trip_id ) VALUES (4, 4, 3, 3, 5, 4, 'This tryp was tight', 1);
