@@ -13,9 +13,11 @@ class MessageForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     var message = {
-      user: this.props.user,
-      text: this.state.text
+      user: this.props.user || 'anonymous',
+      text: this.state.text,
+      tripId: this.props.tripId
     }
+    console.log('handlesubmit message',message);
     this.props.onMessageSubmit(message);
     this.setState({ text: '' });
   }

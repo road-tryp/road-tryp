@@ -231,7 +231,7 @@ class Trip extends React.Component {
               </Item.Group>
             </Grid.Column>
             <Grid.Column computer={10}>
-              <ChatApp currentUser={this.currentUser}/>
+              <ChatApp currentUser={this.currentUser} tripId={this.match.params.tripId}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>

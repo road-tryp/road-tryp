@@ -25,6 +25,22 @@ const TripToad = bookshelf.Model.extend({
   tableName: 'trips_toads'
 });
 
+const TripMessages = {
+  getAllTripMessages: (tripId) => {
+    let query = `select * from messages where trip_id = ${tripId}`;
+    return db.raw(query).then((data) => {
+      console.log('data from getalltripmessages',data[0]);
+      return data[0];
+    });
+  },
+
+  saveTripMessage: (message) => {
+    let query = `INSERT INTO messages ( trip_id, username, message_text ) VALUES (${message.tripId},'${message.user}','${message.text}'); `;
+    console.log('query', query);
+    return db.raw(query).then((data) => console.log('test'));
+  }
+}
+
 const reviews = {
 
   getAllUserData: (userID) =>  {
@@ -76,6 +92,7 @@ module.exports = {
   Trips: Trip.collection(Trip),
   TripToad: TripToad,
   TripToads: TripToad.collection(TripToad),
-  Reviews: reviews
+  Reviews: reviews,
+  TripMessages: TripMessages
 };
 
