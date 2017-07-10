@@ -8,6 +8,16 @@ const app = express();
 const ADDRESS = '127.0.0.1';
 const PORT = process.env.PORT || 3000;
 const MAX_COOKIE_AGE = 3600000;
+const server = app.listen(3000);
+const io = require('socket.io').listen(server);
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+  socket.on('chat message', function(msg){
+    console.log('message: ' + msg);
+    io.emit('chat message', msg);
+  });
+});
 var Promise = require('bluebird');
 
 const db = require('../database/bookshelf').knex;
@@ -316,6 +326,6 @@ app.get('/*', function(req, res){
   // console.log('Session created: ', req.session);
 });
 
-app.listen(PORT, () => {
-  console.log(`Toad Tryp server listening on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Toad Tryp server listening on port ${PORT}`);
+// });

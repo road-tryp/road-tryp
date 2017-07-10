@@ -1,11 +1,12 @@
 import React from 'react';
-import { Segment, Container, Header, Button, Checkbox, Form, Input, Select, Image, Card, Icon, Embed, Grid } from 'semantic-ui-react';
+import { Segment, Container, Header, Button, Checkbox, Form, Input, Select, Image, Card, Icon, Embed, Grid, Item} from 'semantic-ui-react';
 import axios from 'axios';
 import Search from '../Search/Search.jsx';
 import AuthenticationHelper from '../../../../lib/AuhenticationHelper.js';
 import {Redirect} from 'react-router-dom';
 import formatTime from '../utils/formatTime.js';
 import dateParser from '../utils/dateParser.js';
+import ChatApp from '../Chat/ChatApp.jsx';
 
 class Trip extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class Trip extends React.Component {
   }
 
   componentDidMount() {
+    console.log('props yo',this.props)
     this.fetch(this.match.params.tripId);
   }
 
@@ -39,6 +41,7 @@ class Trip extends React.Component {
         redirectTo: this.state.redirectTo,
         trips: response.data
       });
+      console.log('driver: ',response.data.driver, '\n rider: ', response.data.riders);
     })
     .catch((error) => {
       console.log('GET unsuccessful from the DB in Trip Component', error);
@@ -149,6 +152,28 @@ class Trip extends React.Component {
               </Card.Content>
             </Card>
           </Grid.Column>
+          <Grid.Row>
+            <Grid.Column computer={6} mobile={16}>
+              <Item.Group>
+                <Item>
+                  <Item.Image size='tiny' src='http://www.vacul.org/extension/site/design/site/images/anonymous-user.png' />
+                  <Item.Content verticalAlign='middle'>
+                    <Item.Header as='a'>12 Years a Slave</Item.Header>
+                  </Item.Content>
+                </Item>
+
+                <Item>
+                  <Item.Image size='tiny' src='http://www.vacul.org/extension/site/design/site/images/anonymous-user.png' />
+                  <Item.Content verticalAlign='middle'>
+                    <Item.Header as='a' content='My Neighbor Totoro' />
+                  </Item.Content>
+                </Item>
+              </Item.Group>
+            </Grid.Column>
+            <Grid.Column computer={10}>
+              <ChatApp currentUser={this.currentUser}/>
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
         <Container textAlign='center'>
           <br/>
