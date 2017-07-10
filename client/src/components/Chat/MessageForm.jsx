@@ -4,11 +4,10 @@ class MessageForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: 'Type something. Hit enter.'
+      text: ''
     }
     this.changeHandler = this.changeHandler.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.clickHandler = this.clickHandler.bind(this);
   }
 
   handleSubmit(e) {
@@ -27,10 +26,6 @@ class MessageForm extends React.Component {
     this.setState({ text: e.target.value });
   }
 
-  clickHandler(e) {
-    this.setState({ text: ''});
-  }
-
   render() {
     const inputWidth = {width:'100%'};
     return (
@@ -38,7 +33,7 @@ class MessageForm extends React.Component {
         <hr />
         <form onSubmit={this.handleSubmit} style={inputWidth}>
           <input
-            onClick={this.clickHandler}
+            placeholder='Type something, then hit enter...'
             onChange={this.changeHandler}
             value={this.state.text}
             style={inputWidth}

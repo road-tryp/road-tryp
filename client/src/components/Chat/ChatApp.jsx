@@ -84,6 +84,7 @@ class ChatApp extends React.Component {
     const formWidth = {width:'100%'};
     return (
       <div>
+        <h3> Chat with your trip-mates: </h3>
         <MessageList
           messages={this.state.messages}
         />
