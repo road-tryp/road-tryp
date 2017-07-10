@@ -61,9 +61,9 @@ class SearchResultRow extends React.Component {
             </Table.Cell>
             <Table.Cell textAlign='left'> {this.props.trip.departure_city}, {this.props.trip.departure_state}</Table.Cell>
             <Table.Cell singleLine>{formatTime(this.props.trip.departure_time)} <br/> {dateParser(this.props.trip.departure_date)}</Table.Cell>
-            <Table.Cell singleLine>{this.props.trip.arrival_city}, {this.props.trip.arrival_state}</Table.Cell>
+            <Table.Cell textAlign='left'>{this.props.trip.arrival_city}, {this.props.trip.arrival_state}</Table.Cell>
             <Table.Cell singleLine>{formatTime(this.props.trip.arrival_time)} <br/> {dateParser(this.props.trip.arrival_date)}</Table.Cell>  
-            <Table.Cell singleLine>{this.props.driverDetails.year} {this.props.driverDetails.make || 'No Vehicle Information'} {this.props.driverDetails.model}</Table.Cell>
+            <Table.Cell textAlign='left'>{this.props.driverDetails.year} {this.props.driverDetails.make || 'No Info'} {this.props.driverDetails.model}</Table.Cell>
             <Table.Cell singleLine>{this.props.trip.seats}</Table.Cell>
             <Table.Cell textAlign='left'><a onClick={this.showModal}>{this.props.driverDetails.first_name + ' ' + this.props.driverDetails.last_name}</a>, <Stars rating = {this.state.driverOverallRating} /> </Table.Cell>
             <Table.Cell singleLine textAlign='right'><Button color='green' value={this.props.trip.id} onClick={this.props.handleClick}>Select</Button> </Table.Cell>

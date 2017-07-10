@@ -10,7 +10,8 @@ let socket = io();
 class ChatApp extends React.Component {
   constructor(props) {
     super(props);
-    this.user = props.currentUser.username
+    this.user = props.currentUser.username;
+    this.tripId = props.tripId;
     this.state = {
       users: [],
       messages: [],
@@ -18,9 +19,14 @@ class ChatApp extends React.Component {
     }
     this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
     this._messageRecieve = this._messageRecieve.bind(this);
+    this._initialize = this._initialize.bind(this);
   }
 
   componentDidMount() {
+    // on mount, send a request to the server to get all the saved messages
+    console.log('trip id', this.tripId);
+    socket.emit('connected', this.tripId);
+    socket.on('archivedMessages', this._initialize);
     socket.on('init', this._initialize);
     socket.on('chat message', this._messageRecieve);
     socket.on('user:join', this._userJoined);
@@ -28,8 +34,14 @@ class ChatApp extends React.Component {
   }
 
   _initialize(data) {
-    var { users, name } = data;
-    this.setState({ users, user: name });
+    // console.log('initialized');
+    // var { users, name } = data;
+    // this.setState({ users, user: name });
+    let allMessages = data.map((message) => {
+      return {'user': message.username, 'text': message.message_text}
+    })
+    console.log('allmessages', allMessages);
+    this.setState({messages: allMessages});
   }
 
   _messageRecieve(message) {
@@ -39,6 +51,7 @@ class ChatApp extends React.Component {
   }
 
   _userJoined(data) {
+    console.log('a user joined');
     var { users, messages } = this.state;
     var { name } = data;
     users.push(name);
@@ -68,17 +81,18 @@ class ChatApp extends React.Component {
   }
 
   render() {
+    const formWidth = {width:'100%'};
     return (
       <div>
-        <UsersList
-          users={this.state.users}
-        />
+        <h3> Chat with your trip-mates: </h3>
         <MessageList
           messages={this.state.messages}
         />
         <MessageForm
           onMessageSubmit={this.handleMessageSubmit}
           user={this.user}
+          tripId={this.tripId}
+          style={formWidth}
         />
       </div>
     );

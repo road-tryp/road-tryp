@@ -22,14 +22,14 @@ module.exports = (trips) => {
       }
     }],
     "imagesSettings": { // circle
-      "color": "gray",
+      "color": "blue",
       "rollOverColor": "gray",
       "selectedColor": "gray",
     },
     "linesSettings": { // line between cities
       "arc": -.7, // this makes lines curved. Use value from -1 to 1
-      "color": "gray",
-      "thickness": 1.4
+      "color": "white",
+      "thickness": 2
     },
     "zoomControl": {
       "gridHeight": 100,

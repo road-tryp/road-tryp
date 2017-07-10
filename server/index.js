@@ -13,8 +13,15 @@ const io = require('socket.io').listen(server);
 
 io.on('connection', function(socket){
   console.log('a user connected');
+  socket.on('connected', function(tripId){
+    models.TripMessages.getAllTripMessages(tripId)
+    .then((data) => {
+      console.log('data from dbquery',data)
+      io.emit('archivedMessages', data)});
+  });
   socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
+    // save to db
+    models.TripMessages.saveTripMessage(msg)
     io.emit('chat message', msg);
   });
 });
@@ -62,7 +69,7 @@ app.post('/api/add-review', (req, res) => {
 });
 
 
-app.get('/api/users/:driverID', (req, res) => {
+app.get('/api/reviews/:driverID', (req, res) => {
 
   let returnObj = {};
 

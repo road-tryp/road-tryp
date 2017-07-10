@@ -1,9 +1,10 @@
 import React from 'react';
 import Message from './Message.jsx';
 
+const listStyle = {height: '435px', overflow: 'auto', borderStyle: 'inset'}
+
 const MessageList = (props) => (
-  <div className='messages'>
-    <h2> Chat with your trip-mates: </h2>
+  <div className='messages' style={listStyle}>
     {
       props.messages.map((message, i) => {
         return (

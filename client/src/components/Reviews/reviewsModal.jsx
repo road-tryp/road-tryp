@@ -17,7 +17,7 @@ class DriverReviews extends React.Component {
 
 	componentDidMount() {
 
-    axios.get(`/api/users/${this.props.driverID}`)
+    axios.get(`/api/reviews/${this.props.driverID}`)
     .then((data) => {
       this.setState({
         review: data.data.data,
