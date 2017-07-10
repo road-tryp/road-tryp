@@ -125,7 +125,6 @@ class Trip extends React.Component {
   render() {
     const { trips, redirectTo, currentUser } = this.state;
     const { location, match } = this.props;
-
     return (
       <Container>
 

@@ -35,7 +35,7 @@ class MessageForm extends React.Component {
     const inputWidth = {width:'100%'};
     return (
       <div className='message_form'>
-        <h3>Write New Message</h3>
+        <hr />
         <form onSubmit={this.handleSubmit} style={inputWidth}>
           <input
             onClick={this.clickHandler}
