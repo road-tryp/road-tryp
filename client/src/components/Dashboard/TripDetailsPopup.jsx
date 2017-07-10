@@ -27,6 +27,7 @@ const TripDetailsPopup = (props) => (
       {props.driverDetails.year} {props.driverDetails.make} {props.driverDetails.model}<br />
         {props.driverDetails.license_plate}
       </p>
+      <a><button>More Info</button></a>
     </Message>
   </div>
 );
