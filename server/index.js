@@ -69,7 +69,7 @@ app.post('/api/add-review', (req, res) => {
 });
 
 
-app.get('/api/users/:driverID', (req, res) => {
+app.get('/api/reviews/:driverID', (req, res) => {
 
   let returnObj = {};
 
