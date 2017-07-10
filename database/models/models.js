@@ -37,7 +37,7 @@ const TripMessages = {
   saveTripMessage: (message) => {
     let query = `INSERT INTO messages ( trip_id, username, message_text ) VALUES (${message.tripId},'${message.user}','${message.text}'); `;
     console.log('query', query);
-    return db.raw(query).then((data) => console.log('test'));
+    return db.raw(query).then((data) => console.log('message sent'));
   }
 }
 

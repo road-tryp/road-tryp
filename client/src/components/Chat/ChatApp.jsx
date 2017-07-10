@@ -81,11 +81,9 @@ class ChatApp extends React.Component {
   }
 
   render() {
+    const formWidth = {width:'100%'};
     return (
       <div>
-        <UsersList
-          users={this.state.users}
-        />
         <MessageList
           messages={this.state.messages}
         />
@@ -93,6 +91,7 @@ class ChatApp extends React.Component {
           onMessageSubmit={this.handleMessageSubmit}
           user={this.user}
           tripId={this.tripId}
+          style={formWidth}
         />
       </div>
     );
