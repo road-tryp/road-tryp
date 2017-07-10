@@ -166,7 +166,7 @@ app.get('/api/maps/', (req, res) => {
   let query = `select * from trips
                where departure_city LIKE '${req.query.depart}%' and
                      arrival_city LIKE '${req.query.arrive}%' and
-                     departure_date = '2017-07-08';`;
+                     departure_date = '${req.query.departdate}';`;
   console.log('query: ', query);
   db.raw(query)
   .then((trips) => {
