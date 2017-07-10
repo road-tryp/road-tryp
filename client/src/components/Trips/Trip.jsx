@@ -7,6 +7,9 @@ import {Redirect} from 'react-router-dom';
 import formatTime from '../utils/formatTime.js';
 import dateParser from '../utils/dateParser.js';
 import ChatApp from '../Chat/ChatApp.jsx';
+import AddReviewModal from '../Reviews/AddReviewModal.jsx';
+import ReviewsModal from '../Reviews/reviewsModal.jsx';
+import StarRating from '../Reviews/MiniStars.jsx';
 
 class Trip extends React.Component {
   constructor(props) {
@@ -17,20 +20,56 @@ class Trip extends React.Component {
       redirectTo: null,
       trips: {
         driver: {},
-        rider: {}
-      }
+        riders: [{id: 0}],
+      },
+      driverID: 6,
+      overallRating: 5,
+      openAddReviewModal: false,
+      openReviewModal: false
     }
-    this.handleRequestTrip.bind(this);
+    this.handleRequestTrip.bind(this); 
   }
 
-  componentDidMount() {
-    console.log('props yo',this.props)
+  componentWillMount() {
+
+    console.log('this.match', this.props.match)
+    console.log('currentUser', this.currentUser)
+    
     this.fetch(this.match.params.tripId);
   }
 
   handleRequestTrip(e) {
     e.preventDefault();
     this.postTripRequest(this.state.trips.id, this.currentUser.id)
+  }
+
+  showAddReviewModal () {
+    console.log('ran showAddReviewModal');
+    this.setState({
+      openAddReviewModal: true
+    });
+  }
+
+  closeAddReviewModal() {
+    console.log('ran closeAddReviewModal');
+    this.setState({
+      openAddReviewModal: false
+    });
+  }
+
+
+  showReviewModal () {
+    console.log('ran showReviewModal');
+    this.setState({
+      openReviewModal: true
+    });
+  }
+
+  closeReviewModal() {
+    console.log('ran closeReviewModal');
+    this.setState({
+      openReviewModal: false
+    });
   }
 
   fetch(tripId) {
@@ -41,7 +80,24 @@ class Trip extends React.Component {
         redirectTo: this.state.redirectTo,
         trips: response.data
       });
-      console.log('driver: ',response.data.driver, '\n rider: ', response.data.riders);
+      return response;
+    })
+    .then((data) => {
+      this.setState({
+        driverID: data.data.driver.id
+      });
+      return data;
+    })
+    .then((data) => {
+
+       axios.get(`/api/driver-ratings/${data.data.driver.id}`)
+        .then((data) => {
+          console.log('overall rating', data.data[0].overall_rating);
+            this.setState({
+             overallRating: data.data[0].overall_rating
+            });
+        });
+
     })
     .catch((error) => {
       console.log('GET unsuccessful from the DB in Trip Component', error);
@@ -119,13 +175,17 @@ class Trip extends React.Component {
                 </Card.Header>
                 <Card.Meta>
                   <span className='date'>
-                    Joined in 2017
+                    Joined in 2017 <br />
+                    <StarRating rating = {this.state.overallRating}/>
+                    <a onClick={this.showReviewModal.bind(this)}>Read Reviews </a>
+
                   </span>
                 </Card.Meta>
                 <Card.Description>
                   <Icon name='mail outline' /> {trips.driver.email} <br/>
                   <Icon name='phone'/> {trips.driver.phone_number}<br/>
-                  <Icon name='car'/> {trips.driver.year} {trips.driver.make} {trips.driver.model}
+                  <Icon name='car'/> {trips.driver.year} {trips.driver.make} {trips.driver.model} <br/>
+                  <a onClick={this.showAddReviewModal.bind(this)}> Write a Review </a>
                 </Card.Description>
               </Card.Content>
               <Card.Content extra>
@@ -185,6 +245,11 @@ class Trip extends React.Component {
           pathname: redirectTo,
           state: {location, match, currentUser}
         }} />}
+
+        <AddReviewModal close={this.closeAddReviewModal.bind(this)} dimmer={true} open={this.state.openAddReviewModal} driverID = {this.state.trips.driverID} tripID = {this.state.trips.id} riderID = {this.state.trips.riders[0].id} />
+
+          <ReviewsModal dimmer = {true} open = {this.state.openReviewModal} close = {this.closeReviewModal.bind(this)}  driverID = {this.state.driverID}/>
+
       </Container>
     )
   }

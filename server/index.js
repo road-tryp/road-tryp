@@ -36,12 +36,51 @@ app.use(bodyParser.json());
 
 
 /**************USERS*****************/
-app.get('/api/users/:tripID', (req, res) => {
-  console.log(req.params.tripID);
 
-  models.Reviews.getAllReviewsForDriver(Number(req.params.tripID))
-    .then(data => console.log(data));
-  res.status(200).send({data: 'hello'});
+app.get('/api/driver-ratings/:driverID', (req, res) => {
+
+
+  models.Reviews.getOverallRatingForDriver(req.params.driverID)
+  .then((data) => {
+    res.status(200).send(data);
+  });
+ 
+});
+
+
+app.post('/api/add-review', (req, res) => {
+    models.Reviews.addReview(req.body)
+    .then((data) => {
+      console.log('insert data', data);
+    })
+
+
+  res.status(200).send(req.body);
+
+  console.log('add review end point', req.body);
+
+});
+
+
+app.get('/api/users/:driverID', (req, res) => {
+
+  let returnObj = {};
+
+  models.Reviews.getAllReviewsForDriver(Number(req.params.driverID))
+    .then((data) => {
+      returnObj.data = data;
+      return;
+    })
+    .then((obj) => {
+     return models.Reviews.getAverageRatingForDriver(Number(req.params.driverID))
+    })
+    .then((data) => {
+      returnObj.ratings = data[0];
+      return returnObj;
+    })
+    .then((data) => {
+      res.status(200).send(data);
+    });
 });
 
 

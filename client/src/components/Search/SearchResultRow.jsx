@@ -4,22 +4,37 @@ import formatTime from '../utils/formatTime.js';
 import dateParser from '../utils/dateParser.js';
 import Stars from '../Reviews/MiniStars.jsx';
 import ReviewsModal from '../Reviews/reviewsModal.jsx';
+import axios from 'axios';
 
 class SearchResultRow extends React.Component {
 
     constructor(props) {
       super(props);
       this.state = ({
-        open: false
+        open: false,
+        driverOverallRating: 0
       });
       this.showModal = this.showModal.bind(this);
       this.closeModal = this.closeModal.bind(this);
-
+      
     }
 
-  componentDidMount() {
-    console.log('search results row props', this.props);
+    componentWillMount() {
+      this.getDriverOverallRating();
+    }
+
+
+  getDriverOverallRating() {
+
+    axios.get(`/api/driver-ratings/${this.props.driverDetails.id}`)
+    .then((data) => {
+      console.log('overall rating', data.data[0].overall_rating);
+      this.setState({
+        driverOverallRating: data.data[0].overall_rating
+      });
+    });
   }
+
 
   showModal () {
     console.log('ran showModal');
@@ -36,6 +51,7 @@ class SearchResultRow extends React.Component {
   }
 
   render() {
+    console.log('trip obj', this.props.driverDetails.id);
 
     return (
 
@@ -49,7 +65,7 @@ class SearchResultRow extends React.Component {
             <Table.Cell singleLine>{formatTime(this.props.trip.arrival_time)} <br/> {dateParser(this.props.trip.arrival_date)}</Table.Cell>  
             <Table.Cell singleLine>{this.props.driverDetails.year} {this.props.driverDetails.make || 'No Vehicle Information'} {this.props.driverDetails.model}</Table.Cell>
             <Table.Cell singleLine>{this.props.trip.seats}</Table.Cell>
-            <Table.Cell textAlign='left'><a onClick={this.showModal}>Joe Lei</a>, <Stars /> </Table.Cell>
+            <Table.Cell textAlign='left'><a onClick={this.showModal}>{this.props.driverDetails.first_name + ' ' + this.props.driverDetails.last_name}</a>, <Stars rating = {this.state.driverOverallRating} /> </Table.Cell>
             <Table.Cell singleLine textAlign='right'><Button color='green' value={this.props.trip.id} onClick={this.props.handleClick}>Select</Button> </Table.Cell>
             <ReviewsModal dimmer = {true} open = {this.state.open} close = {this.closeModal}  driverID = {this.props.trip.driver_id}/>
 
