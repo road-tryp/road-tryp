@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Header, Label, Popup } from 'semantic-ui-react';
 import TripsDetailsPopup from './TripDetailsPopup.jsx';
+import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 import formatTime from '../utils/formatTime.js';
 
@@ -9,8 +10,10 @@ class DashboardDriverRow extends React.Component {
     super(props)
 
     this.state = {
-      driver: {}
+      driver: {},
+      redirectTo: null,
     }
+    this.handleClick = this.handleClick.bind(this);
   }
 
   getDriverInfoById() {
@@ -25,6 +28,13 @@ class DashboardDriverRow extends React.Component {
       .catch( err => {
         console.log('Error getting driver in DashboardDriverRow: ', err);
       })
+  }
+
+  handleClick(e) {
+    console.log('click handler working', redirectTo)
+    this.setState({
+        redirectTo: `/trip/${e.target.value}`
+    })
   }
 
   render() {
@@ -45,16 +55,19 @@ class DashboardDriverRow extends React.Component {
       <Popup
         trigger={<Label ribbon>Details</Label>}
         content={
-           <TripsDetailsPopup trip={this.props.trip} driverDetails={this.state.driver} />
+           <TripsDetailsPopup trip={this.props.trip} driverDetails={this.state.driver} handleClick={this.state.handleClick} />
           }
         on='click'
         onOpen={this.getDriverInfoById.bind(this)}
         position='bottom right'
       /> 
       </Table.Cell>
+              {this.state.redirectTo &&
+          <Redirect push to={{pathname: this.state.redirectTo}} />}
     </Table.Row>
 
     )
+    
   } //end redner
 
 } // end class

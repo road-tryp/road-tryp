@@ -212,24 +212,7 @@ class Trip extends React.Component {
             </Card>
           </Grid.Column>
           <Grid.Row>
-            <Grid.Column computer={6} mobile={16}>
-              <Item.Group>
-                <Item>
-                  <Item.Image size='tiny' src='http://www.vacul.org/extension/site/design/site/images/anonymous-user.png' />
-                  <Item.Content verticalAlign='middle'>
-                    <Item.Header as='a'>12 Years a Slave</Item.Header>
-                  </Item.Content>
-                </Item>
-
-                <Item>
-                  <Item.Image size='tiny' src='http://www.vacul.org/extension/site/design/site/images/anonymous-user.png' />
-                  <Item.Content verticalAlign='middle'>
-                    <Item.Header as='a' content='My Neighbor Totoro' />
-                  </Item.Content>
-                </Item>
-              </Item.Group>
-            </Grid.Column>
-            <Grid.Column computer={10}>
+            <Grid.Column computer={16}>
               <ChatApp currentUser={this.currentUser} tripId={this.match.params.tripId}/>
             </Grid.Column>
           </Grid.Row>

@@ -96,7 +96,7 @@ class AddReview extends React.Component {
       <Modal dimmer={this.props.dimmer} open={this.props.open} onClose={this.props.close}  >
 
 
-       <Modal.Header>Select a Photo</Modal.Header>
+       <Modal.Header>Add a review</Modal.Header>
           <Modal.Content >
               <Grid centered columns={2}>
                 <Divider hidden/>
