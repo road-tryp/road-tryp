@@ -4,10 +4,10 @@
 
 ## Team
 
-  - Dylan Gould
-  - Jun Park
-  - Kirk Rohani
-  - Solomon Tang
+  - Scott Yoon
+  - Matt Reyes
+  - Joe Lei
+  - Corey Chau
 
 ## Table of Contents
 
