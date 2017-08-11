@@ -1,4 +1,4 @@
-# Project Name
+# Road Tryp
 
 > Ridesharing for roadtrips.
 
@@ -34,6 +34,7 @@
 - React
 - React-Router
 - Webpack
+- amCharts
 - OAuth
 - Semantic UI
 
