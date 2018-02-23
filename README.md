@@ -40,6 +40,9 @@
 
 ## Development
 
+### Screenshot
+![Road Trip Map](roadtrip-map.jpg?raw=true "Road Trip Map")
+
 ### Installing Dependencies
 
 From within the root directory:
